@@ -3,11 +3,8 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import Vuex from 'vuex';
-
-console.warn(typeof Vuex);
-
-Vue.use(Vuex);
+import Vuex from 'vuex'
+import store from './store'
 
 Vue.config.errorHandler = function(e) {
   console.warn(e);
@@ -24,6 +21,7 @@ Vue.directive('focus', {
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  store,
   router,
   template: '<App/>',
   components: { App }

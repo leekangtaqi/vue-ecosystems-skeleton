@@ -6,9 +6,12 @@
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
+    "test": "node build/test.js",
     "build": "node build/build.js"
   },
   "dependencies": {
+    "chai": "^3.5.0",
+    "inject-loader": "^3.0.0-beta4",
     "vue": "^2.1.10",
     "vue-router": "^2.2.0",
     "vuex": "^2.1.2"
