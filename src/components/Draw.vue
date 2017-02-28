@@ -1,21 +1,6 @@
 <template>
   <div class="hello">
-    <h1>{{ title }}</h1>
-    <ul>
-      <li is="todo" v-for="todo in filteredTodos" :todo="todo"></li>
-    </ul>
-    <div>
-      <ul class="filter">
-        <li v-for="filterItem in filters" @click="filterTodos(filterOnShow(filterItem))">
-          <a :style="{ color: filterItem[Object.keys(filterItem)[0]] ? '#0e4c30' : '' }">{{ filterOnShow(filterItem) }}</a>
-        </li>
-      </ul>
-    </div>
-    <div>
-      <input type="text" ref="newTodoMsg">
-      <input type="submit" value="submit" @click="onAddTodos">
-    </div>
-    <canvas></canvas>
+    <canvas width="800" height="600" style="border: 1px solid #dadada"></canvas>
   </div>
 </template>
 
@@ -25,14 +10,11 @@ import Todo from './Todo'
 import Rx from 'rxjs/Rx'
 
 export default {
-  name: 'todos',
+  name: 'draw',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
-  },
-  components: {
-    todo: Todo
   },
   created () {
     this.$nextTick(function(){
@@ -62,36 +44,6 @@ export default {
       }
     })
     
-  },
-  computed: {
-    ...mapState({
-      todos: state => state.todos.todos,
-      filters: state => state.todos.filters
-    }),
-    ...mapGetters(['filteredTodos']),
-    title () {
-      return this.filters.filter(f => {
-        let k = Object.keys(f)[0];
-        return f[k]
-      }).map(o => Object.keys(o)[0])[0];
-    },
-    filterOnShow () {
-      return f => {
-        return Object.keys(f)[0]
-      }
-    }
-  },
-  methods: {
-    ...mapActions(['addTodos', 'filterTodos']),
-    onAddTodos (e) {
-      let todoEl = this.$refs.newTodoMsg;
-      let newTodoMsg = todoEl.value;
-      if (!newTodoMsg.trim()) {
-        return;
-      }
-      this.addTodos(newTodoMsg);
-      todoEl.value = "";
-    }
   }
 }
 </script>

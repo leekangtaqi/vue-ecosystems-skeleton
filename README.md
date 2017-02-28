@@ -2,6 +2,11 @@
 
 > A Vue.js project
 
+## Recipes
+vue-router
+vuex
+vue-rx
+
 ## Build Setup
 
 ``` bash
