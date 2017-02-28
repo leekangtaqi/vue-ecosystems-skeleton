@@ -3,9 +3,9 @@
 > A Vue.js project
 
 ## Recipes
-vue-router
-vuex
-vue-rx
+1. vue-router
+2. vuex
+3. vue-rx
 
 ## Build Setup
 
