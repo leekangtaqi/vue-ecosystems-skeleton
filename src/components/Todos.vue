@@ -15,7 +15,6 @@
       <input type="text" ref="newTodoMsg">
       <input type="submit" value="submit" @click="onAddTodos">
     </div>
-    <canvas></canvas>
   </div>
 </template>
 
@@ -35,33 +34,20 @@ export default {
     todo: Todo
   },
   created () {
-    this.$nextTick(function(){
-      const canvas = document.querySelector('canvas')
-      const ctx = canvas.getContext('2d')
-      ctx.beginPath()
-      const move$ = Rx.Observable
-        .fromEvent(canvas, 'mousemove')
-        .map(e => ({ x: e.offsetX, y: e.offsetY }))
-        .bufferCount(2, 1)
-
-      const down$ = Rx.Observable.fromEvent(canvas, 'mousedown')  
-        .map(() => 'down')
-      const up$ = Rx.Observable.fromEvent(canvas, 'mouseup')  
-        .map(() => 'up')
-
-      const upAndDown$ = up$.merge(down$)  
-
-      upAndDown$
-        .switchMap(action => action === 'down' ? move$ : Rx.Observable.empty())
-        .subscribe(draw)
-      
-      function draw ([first, sec]) {
-        ctx.moveTo(first.x, first.y)
-        ctx.lineTo(sec.x, sec.y)
-        ctx.stroke()
-      }
-    })
-    
+    function multiplyByTen(input) {
+      var output = Rx.Observable.create(function subscribe(observer) {
+        console.warn('1111');
+        input.subscribe({
+          next: (v) => observer.next(10 * v),
+          error: (err) => observer.error(err),
+          complete: () => observer.complete()
+        });
+      });
+      return output;
+    }
+    var input = Rx.Observable.from([1, 2, 3, 4]);
+    var output = multiplyByTen(input);
+    // output.subscribe(x => console.log(x));
   },
   computed: {
     ...mapState({
