@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    <h1>{{ interval$ }}</h1>
     <h1>{{ title }}</h1>
     <ul>
       <li is="todo" v-for="todo in filteredTodos" :todo="todo"></li>
@@ -23,31 +24,27 @@ import { mapState, mapActions, mapGetters } from 'vuex'
 import Todo from './Todo'
 import Rx from 'rxjs/Rx'
 
+// let interval$ = Rx.Observable.interval(100)
+let interval$ = Rx.Observable.range(1, 5).map(i => Rx.Observable.interval(2000)).mergeAll()
+
 export default {
   name: 'todos',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      test: 0
     }
   },
   components: {
     todo: Todo
   },
   created () {
-    function multiplyByTen(input) {
-      var output = Rx.Observable.create(function subscribe(observer) {
-        console.warn('1111');
-        input.subscribe({
-          next: (v) => observer.next(10 * v),
-          error: (err) => observer.error(err),
-          complete: () => observer.complete()
-        });
-      });
-      return output;
-    }
-    var input = Rx.Observable.from([1, 2, 3, 4]);
-    var output = multiplyByTen(input);
-    // output.subscribe(x => console.log(x));
+  },
+  subscriptions: {
+    interval$
+  },
+  beforeUpdate (...args) {
+    
   },
   computed: {
     ...mapState({
@@ -66,6 +63,9 @@ export default {
         return Object.keys(f)[0]
       }
     }
+  },
+  destroyed() {
+    console.warn('....')
   },
   methods: {
     ...mapActions(['addTodos', 'filterTodos']),
